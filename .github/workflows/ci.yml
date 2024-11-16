@@ -3,74 +3,35 @@ name: Cypress Tests
 on: push
 
 jobs:
-  cypress-chrome:
+  cypress-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm install
-      - name: Run Cypress Tests in Chrome
-        uses: cypress-io/github-action@v6
-        with:
-          browser: chrome
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-screenshots-chrome
-          path: cypress/screenshots
-          if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-videos-chrome
-          path: cypress/videos
-          if-no-files-found: ignore
 
-  cypress-firefox:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm install
-      - name: Run Cypress Tests in Firefox
-        uses: cypress-io/github-action@v6
-        with:
-          browser: firefox
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-screenshots-firefox
-          path: cypress/screenshots
-          if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-videos-firefox
-          path: cypress/videos
-          if-no-files-found: ignore
 
-  cypress-edge:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm install
-      - name: Run Cypress Tests in Edge
+      - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
-          browser: edge
+          browser: ${{ matrix.browser }}
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-screenshots-edge
+          name: cypress-screenshots-${{ matrix.browser }}
           path: cypress/screenshots
           if-no-files-found: ignore
+          retention-days: 1
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos-edge
+          name: cypress-videos-${{ matrix.browser }}
           path: cypress/videos
           if-no-files-found: ignore
+          retention-days: 1
