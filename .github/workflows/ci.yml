@@ -3,17 +3,24 @@ name: Cypress Tests
 on: push
 
 jobs:
-  cypress-tests:
+  install:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [chrome, firefox, edge]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: npm install
+
+  cypress-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
