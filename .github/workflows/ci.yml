@@ -41,7 +41,6 @@ jobs:
         with:
           browser: ${{ matrix.browser }}
           record: true
-          parallel: true
         env: 
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
