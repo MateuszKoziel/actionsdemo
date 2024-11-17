@@ -17,7 +17,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'CYPRESS_RECORD_KEY', variable: 'CYPRESS_RECORD_KEY')]) {
                     sh '''
                         export CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
-                        npx cypress run --browser chrome --record --key $CYPRESS_RECORD_KEY
+                        npx cypress run --browser electron --record --key $CYPRESS_RECORD_KEY
                     '''
                 }
             }
