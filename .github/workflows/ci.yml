@@ -39,6 +39,17 @@ jobs:
           if-no-files-found: error
           path: node_modules
 
+      - name: Checkout external repository
+        uses: actions/checkout@v4
+        with:
+          repository: "slawekradzyminski/awesome-localstack"
+          path: "awesome-localstack"
+      - name: Run Docker Compose
+        run: |
+          cd awesome-localstack
+          chmod +x run-docker-compose-ci.sh
+          ./run-docker-compose-ci.sh
+
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
