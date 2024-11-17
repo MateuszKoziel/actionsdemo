@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker 'cypress/included:latest' }
+    agent { docker 'cypress/browsers:node-22.11.0-chrome-130.0.6723.116-1-ff-132.0.1-edge-130.0.2849.68-1' }
     stages {
         stage('Install and run tests') {
             steps {
